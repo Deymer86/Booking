@@ -2,6 +2,12 @@ const express = require('express');
 const dbU =require('../src/db/crudUser.js');
 const router = express.Router();
 
+router.get('/', (req, res)=>{
+    dbU.getUsers(function(arrayUsers){
+        res.send(arrayUsers);
+    })
+});
+
 router.get('/:id', (req, res)=>{
     const uid = req.params.id;
     dbU.getUser(uid, function(user){

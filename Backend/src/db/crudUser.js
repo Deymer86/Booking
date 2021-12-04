@@ -1,5 +1,20 @@
 const db = require('./firebase.js');
 
+function getUsers(callback){
+    return db.collection('User').get()
+        .then((refDoc) =>{
+            var arrayUsers = [];
+            refDoc.forEach((doc)=>{
+            arrayUsers.push(doc.data());
+           
+        })
+        callback(arrayUsers);
+    })
+        .catch(err => {
+         callback('Error to get Users ${err}');
+    })
+
+}
 
 function getUser(uid, callback){
     return db.collection('User').doc(uid).get()
@@ -44,6 +59,7 @@ function deleteUser(uid, callback){
 
 module.exports ={
     getUser,
+    getUsers,
     addUser,
     updateUserTotally,
     deleteUser
